@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { getMovieCast } from '../../api/movies';
+import { Wrapper, Item, Text } from './Cast.styled';
 
 export default function Cast() {
   const [cast, setCast] = useState([]);
@@ -13,24 +14,28 @@ export default function Cast() {
   return (
     <>
       {cast && (
-        <ul>
+        <Wrapper>
           {cast.map(actor => {
             return (
-              <li key={actor.id}>
-                {actor.profile_path && (
+              <Item key={actor.id}>
+                {actor.profile_path ? (
                   <img
                     src={`https://www.themoviedb.org/t/p/w500/${actor.profile_path}`}
                     alt={actor.name}
                   />
+                ) : (
+                  <Text>No photo</Text>
                 )}
-                <p>Name: {actor.name}</p>
-                <p>Character: {actor.character}</p>
-              </li>
+                <Text>Name: {actor.name}</Text>
+                <Text>Character: {actor.character}</Text>
+              </Item>
             );
           })}
-        </ul>
+        </Wrapper>
       )}
-      {cast.length === 0 && <p>We don't have information about the cast</p>}
+      {cast.length === 0 && (
+        <Text>We don't have information about the cast</Text>
+      )}
     </>
   );
 }

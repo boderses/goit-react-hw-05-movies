@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
-import { Link, useSearchParams, useLocation } from 'react-router-dom';
+import { useSearchParams, useLocation } from 'react-router-dom';
 import { getMoviesBySearch } from '../../api/movies';
 import { FcSearch } from 'react-icons/fc';
+import { Input, Form, List, LinkItem } from './Movies.styled';
 
 export default function Movies() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -18,41 +19,39 @@ export default function Movies() {
   const handleSubmit = event => {
     event.preventDefault();
     const query = event.currentTarget.elements.inputValue.value;
-    if (query.trim() === '') return alert('no search query');
+    if (query.trim() === '') return alert('Enter the movie name');
     setSearchParams({ query: query });
   };
 
   return (
     <div>
-      <form onSubmit={handleSubmit}>
-        <button type="submit">
-          <FcSearch size="30" />
-        </button>
-
-        <input
+      <Form onSubmit={handleSubmit}>
+        <Input
           type="text"
           autoComplete="off"
           autoFocus
-          placeholder="Search movies"
+          placeholder="Search movie"
           name="inputValue"
         />
-      </form>
+        <button type="submit">
+          <FcSearch size="20" />
+        </button>
+      </Form>
       {movies && (
-        <ul>
+        <List>
           {movies.map(movie => {
             return (
-              <Link
+              <LinkItem
                 key={movie.id}
                 to={`${movie.id}`}
                 state={{ from: location }}
               >
                 <li>{movie.title}</li>
-              </Link>
+              </LinkItem>
             );
           })}
-        </ul>
+        </List>
       )}
-      {movies.length === 0 && <p>Enter the movie name</p>}
     </div>
   );
 }
