@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
 import { getTrendingMovies } from '../../api/movies';
 import { Title, Wrapper, LinkItem } from './Home.styled';
 
